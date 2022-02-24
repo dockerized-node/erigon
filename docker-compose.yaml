@@ -11,7 +11,7 @@ services:
     restart: always
     volumes:
       - ./data:/home/erigon/.local/share/erigon
-    command: /erigon/erigon --private.api.addr=0.0.0.0:9092 -port 30303 --chain mainnet
+    command: /erigon/erigon --datadir /home/erigon/.local/share/erigon --private.api.addr=0.0.0.0:9092 -port 30303 --chain mainnet
   rpcdaemon:
     image: erigon
     container_name: rpcdaemon
