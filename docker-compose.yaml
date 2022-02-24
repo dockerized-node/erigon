@@ -1,0 +1,24 @@
+version: "3.0"
+
+services:
+  erigon:
+    image: erigon
+    build: .
+    container_name: erigon
+    ports:
+      - "30303:30303/tcp"
+      - "30303:30303/udp"
+    restart: always
+    volumes:
+      - ./data:/data
+    command: erigon --datadir /data --private.api.addr=0.0.0.0:9092 -port 30303 --chain mainnet
+  rpcdaemon:
+    image: erigon
+    container_name: rpcdaemon
+    ports:
+      - "8545:8545/tcp"
+      - "8546:8546/tcp"
+    restart: always
+    volumes:
+      - ./data:/data
+    command: rpcdaemon --datadir /data --private.api.addr=erigon:9092 --http --http.addr 0.0.0.0 --http.port 8545 --http.api=eth,debug,net,trace,web3,erigon --ws --ws.addr 0.0.0.0 --ws.port 8546 --ws.api=eth,debug,net,trace,web3,erigon
