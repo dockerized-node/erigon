@@ -10,7 +10,7 @@ services:
       - "30303:30303/udp"
     restart: always
     volumes:
-      - ./data:/data
+      - ./data:/data/erigon
     command: /erigon/erigon --datadir /data/erigon --private.api.addr=0.0.0.0:9092 -port 30303 --chain mainnet
   rpcdaemon:
     image: erigon
@@ -20,7 +20,7 @@ services:
       - "8546:8546/tcp"
     restart: always
     volumes:
-      - ./data:/data
+      - ./data:/data/rpcdaemon
     depends_on:
       - erigon
     command: /erigon/rpcdaemon --datadir /data/rpcdaemon --private.api.addr=erigon:9092 --http.addr 0.0.0.0 --http.port 8545 --http.api=eth,debug,net,trace,web3,erigon --ws
